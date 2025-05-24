@@ -54,9 +54,9 @@ app.get("/up", async(_request, reply) => reply.status(204).send());
 app.get("/stats", async(_request, reply) => {
     const date = new Date().toISOString();
     const dbDate = (await (await client.query({
-        query:  "SELECT UTC_timestamp() as date",
+        query:  "SELECT toTimeZone(now64(), 'UTC') as date",
         format: "JSON"
-    })).json<{ date: string; }>()).data[0].date.replace(" ", "T") + ".000Z";
+    })).json<{ date: string; }>()).data[0].date.replace(" ", "T") + "Z";
     const viewCount = Number((await (await client.query({
         query:  "SELECT COUNT(*) as count FROM post_views",
         format: "JSON"
