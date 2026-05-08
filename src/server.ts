@@ -20,7 +20,7 @@ await app.register(FastifyMiddleware);
 await app.register(FastifyJWT, {
     secret: Config.secretKey,
     decode: { complete: true },
-    verify: { allowedIss: "FemboyFans", allowedAud: "Reports" }
+    verify: { allowedIss: "GayFurCity", allowedAud: "Reports" }
 });
 await app.register(fastifyCors, {
     origin:         "*",
@@ -56,7 +56,7 @@ app.get("/stats", async(_request, reply) => {
     const dbDate = (await (await client.query({
         query:  "SELECT toTimeZone(now64(), 'UTC') as date",
         format: "JSON"
-    })).json<{ date: string; }>()).data[0].date.replace(" ", "T") + "Z";
+    })).json<{ date: string; }>()).data[0].date.replace(" ", "T") + "FZ";
     const viewCount = Number((await (await client.query({
         query:  "SELECT COUNT(*) as count FROM post_views",
         format: "JSON"

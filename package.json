@@ -1,7 +1,7 @@
 {
   "name": "reports",
   "version": "1.0.0",
-  "description": "View reports server for https://femboy.fan",
+  "description": "View reports server for https://gayfur.city",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FemboyFan/Reports.git"
+    "url": "git+https://github.com/GayFurCity/Reports.git"
   },
   "author": "Donovan_DMC <hewwo@yiff.rocks>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FemboyFan/Reports/issues"
+    "url": "https://github.com/GayFurCity/Reports/issues"
   },
-  "homepage": "https://github.com/FemboyFan/Reports#readme",
+  "homepage": "https://github.com/GayFurCity/Reports#readme",
   "dependencies": {
     "@clickhouse/client": "^1.11.1",
     "@fastify/cors": "^11.0.1",
