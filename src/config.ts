@@ -11,6 +11,7 @@ const Config = {
     clickhouseURL: env("CLICKHOUSE_URL") ?? "http://clickhouse:8123",
     redisURL:      env("REDIS_URL") ?? "redis://redis:6379",
     secretKey:     env("SECRET_KEY", true),
-    migrationDir:  env("MIGRATION_DIR") ?? new URL("../migrations", import.meta.url).pathname
+    migrationDir:  env("MIGRATION_DIR") ?? new URL("../migrations", import.meta.url).pathname,
+    metricsPort:   Number(env("METRICS_PORT") ?? 9100)
 };
 export default Config;

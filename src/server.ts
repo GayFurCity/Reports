@@ -4,6 +4,8 @@ import { registerRoutes as registerSearchesRoutes } from "./track/searches.js";
 import { registerRoutes as registerMissedSearchesRoutes } from "./track/missedSearches.js";
 import { registerRoutes as registerApiKeyUsagesRoutes } from "./track/apiKeyUsages.js";
 import client from "./client.js";
+import { httpRequestDuration, httpRequestsTotal } from "./metrics.js";
+import { startMetricsServer } from "./metricsServer.js";
 import Fastify from "fastify";
 import FastifyMiddleware from "@fastify/middie";
 import FastifyJWT from "@fastify/jwt";
@@ -41,6 +43,13 @@ app.addHook("onRequest", async (request, reply) => {
     } catch (error) {
         return reply.send(error);
     }
+});
+
+app.addHook("onResponse", async (request, reply) => {
+    const route = request.routeOptions.url ?? "unknown_route";
+    const labels = { method: request.method, route, status_code: reply.statusCode.toString() };
+    httpRequestDuration.observe(labels, reply.elapsedTime / 1000);
+    httpRequestsTotal.inc(labels);
 });
 
 export type FastiyServer = typeof app;
@@ -98,6 +107,8 @@ app.get("/stats", async(_request, reply) => {
         error:   ping.success ? null : `${ping.error.name}: ${ping.error.message}`
     });
 });
+
+startMetricsServer();
 
 await app.listen({
     host: "0.0.0.0",
