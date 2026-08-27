@@ -46,10 +46,13 @@ app.addHook("onRequest", async (request, reply) => {
 });
 
 app.addHook("onResponse", async (request, reply) => {
+    if (!Config.metricsEnabled) {
+        return;
+    }
     const route = request.routeOptions.url ?? "unknown_route";
     const labels = { method: request.method, route, status_code: reply.statusCode.toString() };
-    httpRequestDuration.observe(labels, reply.elapsedTime / 1000);
-    httpRequestsTotal.inc(labels);
+    httpRequestDuration?.observe(labels, reply.elapsedTime / 1000);
+    httpRequestsTotal?.inc(labels);
 });
 
 export type FastiyServer = typeof app;
