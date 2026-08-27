@@ -108,7 +108,9 @@ app.get("/stats", async(_request, reply) => {
     });
 });
 
-startMetricsServer();
+if (Config.metricsEnabled) {
+    startMetricsServer();
+}
 
 await app.listen({
     host: "0.0.0.0",
